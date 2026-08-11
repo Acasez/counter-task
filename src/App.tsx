@@ -58,7 +58,14 @@ export default function App() {
         maxCount={TOTAL_MAX}
       />
 
-      <button onClick={resetCounting}>
+      <button
+        onClick={resetCounting}
+        style={{
+          border: "2px solid #ddd",
+          borderRadius: "12px",
+          marginBottom: "1rem",
+        }}
+      >
         <h1>Reset Button</h1>
       </button>
 
