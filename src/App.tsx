@@ -1,10 +1,35 @@
+// App.tsx
 import { useState } from "react";
 import "./App.css";
 import Collector from "./Components/Collector";
 import Counter from "./Components/Counter";
 
+const MAXCOUNT = 3;
+const TOTAL_MAX = 10;
+
 export default function App() {
-  const [mainCount, setMainCount] = useState(0);
+  const [counters, setCounters] = useState<{ [id: number]: number }>({
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+  });
+
+  // Calculate total from all counter values
+  const totalCount = Object.values(counters).reduce((sum, val) => sum + val, 0);
+
+  const handleUpdate = (counterId: number, newValue: number) => {
+    // Cap individual counter at MAXCOUNT
+    const cappedValue = Math.min(newValue, MAXCOUNT);
+
+    // Only update if the counter hasn't reached its max yet
+    if (cappedValue > counters[counterId]) {
+      setCounters((prev) => ({
+        ...prev,
+        [counterId]: cappedValue,
+      }));
+    }
+  };
 
   return (
     <div
@@ -14,31 +39,33 @@ export default function App() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "30rem",
+        minHeight: "30rem",
+        padding: "1rem",
       }}
     >
-      Counting App
-      <Collector collectorCount={mainCount} maxCount={10} />
-      <Counter
-        counterId={1}
-        currentNumber={mainCount}
-        onUpdateValue={(val) => setMainCount(val)}
+      <h1>Counting App</h1>
+      <Collector
+        collectorCount={Math.min(totalCount, TOTAL_MAX)}
+        maxCount={TOTAL_MAX}
       />
-      <Counter
-        counterId={2}
-        currentNumber={mainCount}
-        onUpdateValue={(val) => setMainCount(val)}
-      />
-      <Counter
-        counterId={3}
-        currentNumber={mainCount}
-        onUpdateValue={(val) => setMainCount(val)}
-      />
-      <Counter
-        counterId={4}
-        currentNumber={mainCount}
-        onUpdateValue={(val) => setMainCount(val)}
-      />
+
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {[1, 2, 3, 4].map((id) => (
+          <Counter
+            key={id}
+            counterId={id}
+            currentNumber={counters[id]}
+            onUpdateValue={(val) => handleUpdate(id, val)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

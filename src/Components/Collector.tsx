@@ -1,3 +1,4 @@
+// Collector.tsx
 interface CollectorProps {
   collectorCount: number;
   maxCount: number;
@@ -8,11 +9,11 @@ export default function Collector({
   maxCount,
 }: CollectorProps) {
   return (
-    <>
-      Here is the Collector
+    <div style={{ marginBottom: "2rem" }}>
+      <h3>📊 Collector Status</h3>
       <h1>
-        The current count is {collectorCount} of {maxCount}
+        Total Count: <strong>{collectorCount}</strong> of {maxCount}
       </h1>
-    </>
+    </div>
   );
 }
