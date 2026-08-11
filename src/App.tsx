@@ -31,6 +31,15 @@ export default function App() {
     }
   };
 
+  function resetCounting() {
+    setCounters({
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+    });
+  }
+
   return (
     <div
       style={{
@@ -48,6 +57,10 @@ export default function App() {
         collectorCount={Math.min(totalCount, TOTAL_MAX)}
         maxCount={TOTAL_MAX}
       />
+
+      <button onClick={resetCounting}>
+        <h1>Reset Button</h1>
+      </button>
 
       <div
         style={{
