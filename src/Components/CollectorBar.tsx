@@ -11,11 +11,27 @@ export default function CollectorBar({
   const fillPercentage = collectorCount * 10;
   const fillAmount = fillPercentage + "%";
   return (
-    <div style={{ marginBottom: "2rem" }}>
-      <h3>📊 Bar Status</h3>
-      <h1>
-        Current Count: <strong>{collectorCount}</strong> of {maxCount}
-      </h1>
+    <div
+      style={{
+        marginBottom: "1rem",
+        border: "0.3rem solid",
+        borderRadius: "2rem",
+        borderColor: "lightGreen",
+      }}
+    >
+      <div
+        style={{
+          marginTop: "0.5rem",
+          display: "flex",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <h2>📊 Bar Status</h2>
+        <h2>
+          <strong>{collectorCount}</strong> of {maxCount}
+        </h2>
+      </div>
+
       <div
         className="bar"
         style={{
