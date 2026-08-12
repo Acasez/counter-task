@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./App.css";
 import CollectorBar from "./Components/CollectorBar";
 import Counter from "./Components/Counter";
+import TrueCollector from "./Components/TrueCollector";
 
 const MAXCOUNT = 3;
 const TOTAL_MAX = 10;
@@ -14,6 +15,7 @@ export default function App() {
     3: 0,
     4: 0,
   });
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   // Get current count for the bar
   const barCount = Object.values(counters).reduce((sum, val) => sum + val, 0);
@@ -22,8 +24,13 @@ export default function App() {
     // Cap individual counter at MAXCOUNT
     const cappedValue = Math.min(newValue, MAXCOUNT);
 
-    // Only update if the counter hasn't reached its max yet
+    if (barCount >= TOTAL_MAX) {
+      resetCounting();
+      setTotalCount((totalCount) => totalCount + 1);
+      return;
+    }
     if (cappedValue > counters[counterId]) {
+      // Only update if the counter hasn't reached its max yet
       setCounters((prev) => ({
         ...prev,
         [counterId]: cappedValue,
@@ -57,7 +64,7 @@ export default function App() {
         collectorCount={Math.min(barCount, TOTAL_MAX)}
         maxCount={TOTAL_MAX}
       />
-
+      <TrueCollector totalCount={totalCount} />
       <button
         onClick={resetCounting}
         style={{
