@@ -32,6 +32,7 @@ export default function CollectorBar({
             width: fillAmount,
             height: "100%",
             borderRadius: "3rem",
+            transition: "width 0.3s",
           }}
         ></div>
       </div>
