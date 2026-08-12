@@ -8,49 +8,66 @@ import TrueCollector from "./Components/TrueCollector";
 const MAXCOUNT = 3;
 const TOTAL_MAX = 10;
 
+interface CounterState {
+  [id: number]: {
+    value: number;
+  };
+}
+
 export default function App() {
-  const [counters, setCounters] = useState<{ [id: number]: number }>({
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
+  const [counters, setCounters] = useState<CounterState>({
+    1: { value: 0 },
+    2: { value: 0 },
+    3: { value: 0 },
+    4: { value: 0 },
   });
   const [totalCount, setTotalCount] = useState<number>(0);
 
   // Get current count for the bar
-  const barCount = Object.values(counters).reduce((sum, val) => sum + val, 0);
-
+  const barCount = Object.values(counters).reduce((sum, c) => sum + c.value, 0);
   const handleUpdate = (counterId: number, newValue: number) => {
-    // Cap individual counter at MAXCOUNT
     const cappedValue = Math.min(newValue, MAXCOUNT);
 
-    if (barCount >= TOTAL_MAX) {
+    if (barCount >= TOTAL_MAX && newValue > counters[counterId]?.value) {
       resetCounting();
       setTotalCount((totalCount) => totalCount + 1);
       return;
     }
-    if (cappedValue > counters[counterId]) {
-      // Only update if the counter hasn't reached its max yet
+    if (cappedValue > (counters[counterId]?.value || 0)) {
       setCounters((prev) => ({
         ...prev,
-        [counterId]: cappedValue,
+        [counterId]: { value: cappedValue },
       }));
     }
   };
 
   function resetCounting() {
-    setCounters({
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
+    setCounters((prev) => {
+      const reset: CounterState = {} as CounterState;
+      Object.entries(prev).forEach(([key]) => {
+        reset[Number(key)] = { value: 0 };
+      });
+      return reset;
     });
   }
 
   function addCounter() {
-    //Todo
+    setCounters((prev) => {
+      const nextId = Math.max(...Object.keys(prev).map(Number), 4) + 1;
+      return {
+        ...prev,
+        [nextId]: { value: 0 },
+      };
+    });
   }
 
+  function removeCounter(counterId: number) {
+    setCounters((prev) => {
+      const next = { ...prev };
+      delete next[counterId];
+      return next;
+    });
+  }
   return (
     <div
       style={{
@@ -105,14 +122,18 @@ export default function App() {
           justifyContent: "center",
         }}
       >
-        {[1, 2, 3, 4].map((id) => (
-          <Counter
-            key={id}
-            counterId={id}
-            currentNumber={counters[id]}
-            onUpdateValue={(val) => handleUpdate(id, val)}
-          />
-        ))}
+        {Object.keys(counters).map((id) => {
+          const numId = Number(id);
+          return (
+            <Counter
+              key={numId}
+              counterId={numId}
+              currentNumber={counters[numId]?.value ?? 0}
+              onUpdateValue={(val) => handleUpdate(numId, val)}
+              onRemove={removeCounter}
+            />
+          );
+        })}
       </div>
     </div>
   );

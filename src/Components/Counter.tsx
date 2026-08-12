@@ -3,6 +3,7 @@ interface CounterProps {
   currentNumber: number;
   counterId: number;
   onUpdateValue: (newValue: number) => void;
+  onRemove?: (id: number) => void;
 }
 
 const MAXCOUNT = 3;
@@ -11,6 +12,7 @@ export default function Counter({
   currentNumber,
   counterId,
   onUpdateValue,
+  onRemove,
 }: CounterProps) {
   const handleClick = () => {
     if (currentNumber < MAXCOUNT) {
@@ -20,8 +22,9 @@ export default function Counter({
 
   const removeCounter = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    console.log("Remove this counter");
-    //TODO
+    if (onRemove) {
+      onRemove(counterId);
+    }
   };
 
   return (
