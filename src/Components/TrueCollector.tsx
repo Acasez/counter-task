@@ -15,7 +15,7 @@ export default function TrueCollector({ totalCount }: TotalCollection) {
       }}
     >
       <h2 style={{ margin: "0.5rem" }}>📊 True Collector Status</h2>
-      <h3 style={{ margin: "1rem" }}>📊 TotalCount {totalCount} </h3>
+      <h2 style={{ margin: "1rem" }}>📊 TotalCount {totalCount} </h2>
     </div>
   );
 }

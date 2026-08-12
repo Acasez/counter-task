@@ -18,6 +18,11 @@ export default function Counter({
     }
   };
 
+  const removeCounter = () => {
+    console.log("Remove this counter");
+    //TODO
+  };
+
   return (
     <div
       onClick={handleClick}
@@ -33,6 +38,7 @@ export default function Counter({
         transition: "transform 0.2s, opacity 0.2s",
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         width: "150px",
+        position: "relative",
       }}
     >
       <h2 style={{ color: "black", margin: "0 0 0.5rem", fontSize: "1rem" }}>
@@ -45,6 +51,19 @@ export default function Counter({
       </div>
       <div style={{ fontSize: "0.75rem", color: "#666" }}>
         {currentNumber >= MAXCOUNT ? "MAX" : `${currentNumber}/${MAXCOUNT}`}
+      </div>
+      <div
+        style={{
+          fontSize: "2rem",
+          color: "red",
+          position: "absolute",
+          border: "lightGray solid 3px",
+          top: "0", // ← Position from top
+          right: "0",
+        }}
+        onClick={removeCounter}
+      >
+        X
       </div>
     </div>
   );
