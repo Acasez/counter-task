@@ -23,12 +23,12 @@ export default function App() {
   });
   const [totalCount, setTotalCount] = useState<number>(0);
 
-  // Get current count for the bar
   const barCount = Object.values(counters).reduce((sum, c) => sum + c.value, 0);
+
   const handleUpdate = (counterId: number, newValue: number) => {
     const cappedValue = Math.min(newValue, MAXCOUNT);
 
-    if (barCount >= TOTAL_MAX && newValue > counters[counterId]?.value) {
+    if (barCount >= TOTAL_MAX - 1 && newValue > counters[counterId]?.value) {
       resetCounting();
       setTotalCount((totalCount) => totalCount + 1);
       return;
