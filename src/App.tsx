@@ -47,6 +47,10 @@ export default function App() {
     });
   }
 
+  function addCounter() {
+    //Todo
+  }
+
   return (
     <div
       style={{
@@ -65,17 +69,34 @@ export default function App() {
         maxCount={TOTAL_MAX}
       />
       <TrueCollector totalCount={totalCount} />
-      <button
-        onClick={resetCounting}
+      <div
         style={{
-          border: "2px solid #ddd",
-          borderRadius: "12px",
+          display: "flex",
+          gap: "2rem",
           marginBottom: "1rem",
         }}
       >
-        <h1>Reset Button</h1>
-      </button>
-
+        <button
+          onClick={addCounter}
+          style={{
+            border: "2px solid #32f49a",
+            borderRadius: "12px",
+            padding: "0.8rem",
+          }}
+        >
+          <h2>Add Counter</h2>
+        </button>
+        <button
+          onClick={resetCounting}
+          style={{
+            border: "2px solid #ddd",
+            borderRadius: "12px",
+            padding: "0.8rem",
+          }}
+        >
+          <h2>Reset Buttons</h2>
+        </button>
+      </div>
       <div
         style={{
           display: "flex",
