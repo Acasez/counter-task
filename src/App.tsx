@@ -1,7 +1,7 @@
 // App.tsx
 import { useState } from "react";
 import "./App.css";
-import Collector from "./Components/Collector";
+import CollectorBar from "./Components/CollectorBar";
 import Counter from "./Components/Counter";
 
 const MAXCOUNT = 3;
@@ -15,8 +15,8 @@ export default function App() {
     4: 0,
   });
 
-  // Calculate total from all counter values
-  const totalCount = Object.values(counters).reduce((sum, val) => sum + val, 0);
+  // Get current count for the bar
+  const barCount = Object.values(counters).reduce((sum, val) => sum + val, 0);
 
   const handleUpdate = (counterId: number, newValue: number) => {
     // Cap individual counter at MAXCOUNT
@@ -53,8 +53,8 @@ export default function App() {
       }}
     >
       <h1>Counting App</h1>
-      <Collector
-        collectorCount={Math.min(totalCount, TOTAL_MAX)}
+      <CollectorBar
+        collectorCount={Math.min(barCount, TOTAL_MAX)}
         maxCount={TOTAL_MAX}
       />
 
