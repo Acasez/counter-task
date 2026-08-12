@@ -18,7 +18,8 @@ export default function Counter({
     }
   };
 
-  const removeCounter = () => {
+  const removeCounter = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     console.log("Remove this counter");
     //TODO
   };
@@ -58,7 +59,7 @@ export default function Counter({
           color: "red",
           position: "absolute",
           border: "lightGray solid 3px",
-          top: "0", // ← Position from top
+          top: "0",
           right: "0",
         }}
         onClick={removeCounter}
